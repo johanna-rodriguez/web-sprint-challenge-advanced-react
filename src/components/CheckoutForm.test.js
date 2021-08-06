@@ -7,6 +7,8 @@ import userEvent from "@testing-library/user-event";
 // Write up the two tests here and make sure they are testing what the title shows
 
 test("form header renders", () => {
+//Check that the Header is been rendered
+
   render(<CheckoutForm />);
   const header = screen.queryByText(/checkout form/i);
   expect(header).toBeInTheDocument();
@@ -14,8 +16,10 @@ test("form header renders", () => {
   expect(header).toHaveTextContent(/checkout form/i);
 });
 
+
 test("form shows success message on submit with form details", () => {
   render(<CheckoutForm />);
+  //fill all the fields of the checkout form to be submit it
   const firstNameInput = screen.getByLabelText(/first name/i);
   userEvent.type(firstNameInput, "Johanna");
 
@@ -34,14 +38,17 @@ test("form shows success message on submit with form details", () => {
   const zipInput = screen.getByLabelText(/zip/i);
   userEvent.type(zipInput, "60038");
 
+  //Submit the form
   const submitButton = screen.getByRole("button");
   userEvent.click(submitButton);
 
+  //Check that the response message is been rendered
   const successMessageText = screen.getByTestId("successMessage")
   expect(successMessageText).toHaveTextContent(
     "You have ordered some plants! Woo-hoo!"
   );
 
+  //Check that the response data rendered match with the one put on the input fields 
   const firstNameDisplay = screen.queryByText(/Johanna/i);
   expect(firstNameDisplay).toBeInTheDocument();
 
